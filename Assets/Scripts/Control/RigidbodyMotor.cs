@@ -18,7 +18,7 @@ public class RigidbodyMotor : MonoBehaviour
     [SerializeField] LayerMask groundCheckLayer;
     [SerializeField] bool grounded;
 
-    [SerializeField] float interactRange, interactMaxMass, interactPullForce, interactDamper, interactSpring;
+    [SerializeField] float interactRange, interactMaxMass, interactPullForce, grabDamperPerKG, grabSpringPerKG;
     [SerializeField] LayerMask interactMask;
     [SerializeField] bool interacting;
     [SerializeField] Rigidbody currentInteractedObject;
@@ -95,8 +95,8 @@ public class RigidbodyMotor : MonoBehaviour
                             posJointDrive = new JointDrive()
                             {
                                 maximumForce = interactPullForce * interactMaxMass,
-                                positionSpring = interactSpring * hit.rigidbody.mass,
-                                positionDamper = interactDamper
+                                positionSpring = grabSpringPerKG * hit.rigidbody.mass,
+                                positionDamper = grabDamperPerKG * hit.rigidbody.mass
                             };
                             rotJointDrive = posJointDrive;
 
@@ -129,6 +129,8 @@ public class RigidbodyMotor : MonoBehaviour
     {
         interacting = false;
         Destroy(joint);
+        currentInteractedMass = 0;
+        currentInteractedObject = null;
     }
     private void OnDrawGizmos()
     {
