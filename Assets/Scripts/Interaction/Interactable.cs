@@ -7,9 +7,11 @@ public class Interactable : MonoBehaviour
 {
     [SerializeField] bool canBeGrabbed;
     public bool CanBeGrabbed => canBeGrabbed;
+    public float currentOutput;
 
     public virtual void Interact()
     {
         print($"Interacted with {gameObject.name} at postiion {transform.position}");
     }
+    
 }
