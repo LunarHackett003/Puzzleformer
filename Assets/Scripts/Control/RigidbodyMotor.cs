@@ -48,7 +48,7 @@ public class RigidbodyMotor : MonoBehaviour
         if(interacting && joint)
         {
             Vector3 headForward = (head.forward * interactRange);
-            joint.anchor = transform.InverseTransformDirection(headForward);
+            joint.anchor = transform.InverseTransformDirection(headForward) + head.localPosition;
             if (Vector3.Distance(head.position + headForward, currentInteractedObject.position) > grabBreakDistance)
             {
                 print("Grabbed object too far!");
@@ -105,7 +105,7 @@ public class RigidbodyMotor : MonoBehaviour
                             joint.autoConfigureConnectedAnchor = false;
                             joint.rotationDriveMode = RotationDriveMode.Slerp;
                             joint.connectedAnchor = Vector3.zero;
-                            joint.anchor = transform.InverseTransformDirection(head.forward * interactRange);
+                            joint.anchor = transform.InverseTransformDirection(head.forward * interactRange) + head.localPosition;
                             joint.xDrive = posJointDrive;
                             joint.yDrive = posJointDrive;
                             joint.zDrive = posJointDrive;
